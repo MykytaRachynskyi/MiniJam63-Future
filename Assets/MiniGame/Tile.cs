@@ -83,14 +83,12 @@ namespace Future
                 yield return null;
             }
 
-            this.transform.position = targetPos;
-
             coveredTile.SetSprite(this.m_SpriteRenderer.sprite, m_ID);
 
             SetInvisible();
-            yield return null;
 
             this.transform.position = m_InitialPosition;
+            yield return null;
 
             callback?.Invoke(this);
         }
