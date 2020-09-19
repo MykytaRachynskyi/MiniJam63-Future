@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SpriteRenderer: {fileID: 4867979287459961807}
+  m_FallTimeInSeconds: 0.5
 --- !u!212 &4867979287459961807
 SpriteRenderer:
   m_ObjectHideFlags: 0

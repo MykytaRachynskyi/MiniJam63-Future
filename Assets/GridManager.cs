@@ -16,11 +16,30 @@ namespace Future
         [SerializeField] float m_ScaleMultiplier = 5f;
         [SerializeField] float m_Distance = 1.0f;
 
+        [SerializeField] int m_RequiredNeighboursToDestroy = 3;
+
         private Tile[,] m_Grid;
 
         private void Start()
         {
             InitGrid();
+        }
+
+        public void ReinitGrid()
+        {
+            DestroyGrid();
+            InitGrid();
+        }
+
+        void DestroyGrid()
+        {
+            for (int i = 0; i < m_Grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < m_Grid.GetLength(1); j++)
+                {
+                    Destroy(m_Grid[i, j].gameObject);
+                }
+            }
         }
 
         void InitGrid()
@@ -49,6 +68,9 @@ namespace Future
         HashSet<Tile> m_VisitedTiles;
         List<Tile> m_ValidNeighbours;
 
+        Dictionary<int, int> m_EmptySpacesPerColumn = new Dictionary<int, int>();
+        HashSet<Tile> m_TilesBeingAnimated = new HashSet<Tile>();
+
         void DestroyAllNeighbours(int coordX, int coordY, int id)
         {
             Tile tappedTile = m_Grid[coordX, coordY];
@@ -56,9 +78,19 @@ namespace Future
             m_VisitedTiles = new HashSet<Tile>();
             m_ValidNeighbours = new List<Tile>();
 
+            m_TilesBeingAnimated.Clear();
+
             m_CurrentRecursion = 0;
 
             DFS(tappedTile);
+
+            if (m_ValidNeighbours.Count < m_RequiredNeighboursToDestroy)
+            {
+                Debug.Log("Not enough neighbours");
+                return;
+            }
+
+            SetAllTilesInteractable(false);
 
             foreach (var item in m_ValidNeighbours)
             {
@@ -75,7 +107,7 @@ namespace Future
             m_ValidNeighbours = m_ValidNeighbours.OrderBy(x => (int)x.GetCoordinates().x).ToList();
             m_ValidNeighbours = m_ValidNeighbours.OrderBy(x => (int)x.GetCoordinates().y).ToList();
 
-            Dictionary<int, int> emptySpacesPerColumn = new Dictionary<int, int>();
+            m_EmptySpacesPerColumn.Clear();
 
             foreach (var item in m_ValidNeighbours)
             {
@@ -100,28 +132,47 @@ namespace Future
                     }
                 }
 
-                emptySpacesPerColumn.Add(coordX, emptySpaces);
+                m_EmptySpacesPerColumn.Add(coordX, emptySpaces);
                 Debug.Log(string.Format("Found {0} empty spaces in column {1}!", emptySpaces, coordX));
             }
 
-            foreach (var item in emptySpacesPerColumn)
+            foreach (var item in m_EmptySpacesPerColumn)
             {
                 int i = 0;
-                int emptySpaces = 0;
+                int processedEmptySpaces = 0;
 
-                int itemValue = item.Value; // emptySpacesFound
+                int unprocessedEmptySpaces = item.Value; // emptySpacesFound
 
                 int recusionGuard1 = 0;
                 int maxRecursions1 = 1000;
-                while (itemValue > 0)
-                {
-                    recusionGuard1++;
-                    if (recusionGuard1 > maxRecursions1)
-                        return;
 
-                    if (!m_Grid[item.Key, i].IsVisible())
+                while (unprocessedEmptySpaces > 0)
+                {
+                    // Recursion guard
                     {
-                        emptySpaces++;
+                        recusionGuard1++;
+                        if (recusionGuard1 > maxRecursions1)
+                        {
+                            Debug.LogError("Inifinite recursion!");
+                            return;
+                        }
+                    }
+                    // ================
+
+                    bool invisible = false;
+                    try
+                    {
+                        invisible = !m_Grid[item.Key, i].IsVisible();
+                    }
+                    catch
+                    {
+                        break;
+                    }
+
+                    if (invisible)
+                    {
+                        processedEmptySpaces++;
+                        i++;
                     }
                     else
                     {
@@ -133,16 +184,32 @@ namespace Future
                         int recusionGuard = 0;
                         int maxRecursions = 1000;
 
+                        int processedTiles = 0;
+
                         while (temp.IsVisible() && j < m_Grid.GetLength(1))
                         {
-                            recusionGuard++;
-                            if (recusionGuard > maxRecursions)
-                                return;
-                            temp.PlayMoveDownAnimation(emptySpaces);
-                            j++;
+                            // Recursion guard
+                            {
+                                recusionGuard++;
+                                if (recusionGuard > maxRecursions)
+                                {
+                                    Debug.LogError("Inifinite recursion!");
+                                    return;
+                                }
+                            }
+                            // ================
+
                             try
                             {
+                                if (processedEmptySpaces > 0)
+                                {
+                                    m_TilesBeingAnimated.Add(temp);
+                                    temp.PlayMoveDownAnimation(processedEmptySpaces, m_Distance,
+                                        m_Grid[item.Key, j - processedEmptySpaces], OnTileFinishedFalling);
+                                }
+                                j++;
                                 temp = m_Grid[item.Key, j];
+                                processedTiles++;
                             }
                             catch
                             {
@@ -150,10 +217,58 @@ namespace Future
                             }
                         }
 
-                        itemValue -= emptySpaces;
+                        i += processedTiles;
+                        unprocessedEmptySpaces -= processedEmptySpaces;
                     }
+                }
+            }
 
-                    i++;
+            if (m_TilesBeingAnimated.Count == 0)
+            {
+                m_TilesBeingAnimated.Clear();
+                RepopulateGrid();
+            }
+        }
+
+        void OnTileFinishedFalling(Tile tile)
+        {
+            if (m_TilesBeingAnimated.Contains(tile))
+            {
+                m_TilesBeingAnimated.Remove(tile);
+            }
+
+            Debug.Log(m_TilesBeingAnimated.Count);
+
+            if (m_TilesBeingAnimated.Count == 0)
+            {
+                RepopulateGrid();
+            }
+        }
+
+        void RepopulateGrid()
+        {
+            foreach (var item in m_EmptySpacesPerColumn)
+            {
+                int j = 1;
+                for (int i = 0; i < item.Value; i++)
+                {
+                    int index = Random.Range(0, m_Sprites.Count);
+                    int row = m_Grid.GetLength(1) - j;
+                    m_Grid[item.Key, row].Init(m_Sprites[index], index, item.Key, row, DestroyAllNeighbours);
+                    j++;
+                }
+            }
+
+            SetAllTilesInteractable(true);
+        }
+
+        void SetAllTilesInteractable(bool interactable)
+        {
+            for (int i = 0; i < m_Grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < m_Grid.GetLength(1); j++)
+                {
+                    m_Grid[i, j].SetInteractable(interactable);
                 }
             }
         }
