@@ -83,7 +83,8 @@ namespace Future
                 yield return null;
             }
 
-            coveredTile.SetSprite(this.m_SpriteRenderer.sprite, m_ID);
+            if (coveredTile != null)
+                coveredTile.SetSprite(this.m_SpriteRenderer.sprite, m_ID);
 
             SetInvisible();
 
