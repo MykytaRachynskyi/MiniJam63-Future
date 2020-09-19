@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ipad
+    uniqueID: 220020485
+    locked: 0
+  - name: IpadScreen
+    uniqueID: 1853487181
+    locked: 0
