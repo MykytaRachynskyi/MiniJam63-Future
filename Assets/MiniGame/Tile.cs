@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 namespace Future
@@ -15,6 +16,8 @@ namespace Future
         public delegate void OnAnimationFinishedCallback(Tile tile);
 
         Coroutine m_FallAnimation;
+
+        Coroutine m_InitFallAnimation;
 
         int m_CoordX;
         int m_CoordY;
@@ -69,6 +72,17 @@ namespace Future
             m_FallAnimation = StartCoroutine(MoveAnimation(spaces, distance, coveredTile, callback));
         }
 
+        public void InitPlayMoveDownAnimation(int spaces, float distance, OnAnimationFinishedCallback callback)
+        {
+            if (spaces == 0)
+                return;
+
+            if (m_InitFallAnimation != null)
+                StopCoroutine(m_InitFallAnimation);
+
+            m_InitFallAnimation = StartCoroutine(InitMoveAnimation(spaces, distance, callback));
+        }
+
         IEnumerator MoveAnimation(int spaces, float downwardDistance, Tile coveredTile, OnAnimationFinishedCallback callback)
         {
             float progress = 0f;
@@ -83,12 +97,35 @@ namespace Future
                 yield return null;
             }
 
-            coveredTile.SetSprite(this.m_SpriteRenderer.sprite, m_ID);
+            if (coveredTile != null)
+                coveredTile.SetSprite(this.m_SpriteRenderer.sprite, m_ID);
 
             SetInvisible();
 
             this.transform.position = m_InitialPosition;
             yield return null;
+
+            callback?.Invoke(this);
+        }
+
+        IEnumerator InitMoveAnimation(int spaces, float downwardDistance, OnAnimationFinishedCallback callback)
+        {
+            SetInteractable(false);
+            float progress = 0f;
+
+            Vector3 currentPos = this.transform.position;
+            Vector3 targetPos = currentPos - new Vector3(0f, spaces * downwardDistance, 0f);
+
+            while (progress < 1f)
+            {
+                progress += Time.deltaTime / m_FallTimeInSeconds;
+                this.transform.position = Vector3.Lerp(currentPos, targetPos, progress);
+                yield return null;
+            }
+            yield return null;
+
+            m_InitialPosition = this.transform.position;
+            SetInteractable(true);
 
             callback?.Invoke(this);
         }
