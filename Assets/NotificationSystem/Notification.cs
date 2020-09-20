@@ -11,6 +11,8 @@ namespace Future
         [SerializeField] RectTransform m_ThisRectTransform;
         [SerializeField] CanvasGroup m_CanvasGroup;
         [SerializeField] TMPro.TextMeshProUGUI m_Text;
+        [SerializeField] TMPro.TextMeshProUGUI m_LeftText;
+        [SerializeField] TMPro.TextMeshProUGUI m_RightText;
 
         [SerializeField] AnimationCurve m_AnimationCurve;
 
@@ -26,9 +28,11 @@ namespace Future
         [SerializeField] float m_SwipeAwayMargin;
         [SerializeField] float m_SwipeAwayTimeInSeconds;
 
-        [SerializeField] IntUnityEvent m_OnSwipeAway;
+        [SerializeField] BoolUnityEvent m_OnSwipeAway;
+        [SerializeField] StringUnityEvent m_OnMainTextRequest;
 
         delegate void MoveCallback();
+        public delegate void OnHiddenCallback();
 
         bool m_IsSwipeable = false;
 
@@ -39,13 +43,35 @@ namespace Future
 
         int m_NotificationID = 0;
 
-        public void SetNotificationText(string text)
-        {
+        NotificationSystemItem m_CurrentSettings;
 
+        public void SetNotification(NotificationSystemItem settings)
+        {
+            m_CurrentSettings = settings;
+
+            if (settings.PrecedentItem != null)
+            {
+                m_Text.text = settings.PrecedentItem.ChoiceMade ? settings.NotificationTextIfPrecedentLeft : settings.NotificationTextIfPrecedentRight;
+            }
+            else
+            {
+                m_Text.text = settings.NotificationText;
+            }
+
+            if (settings.RequiresChoice)
+            {
+                m_LeftText.text = settings.LeftOptionText;
+                m_RightText.text = settings.RightOptionText;
+            }
+            else
+            {
+                m_LeftText.gameObject.SetActive(false);
+                m_RightText.gameObject.SetActive(false);
+            }
         }
 
         [ContextMenu("Show notification")]
-        public void Show()
+        public void Show(OnHiddenCallback onHiddenCallback = null)
         {
             StopMovementAnimation();
 
@@ -53,6 +79,11 @@ namespace Future
             {
                 m_IsSwipeable = true;
             }));
+        }
+
+        public void RequestMainText()
+        {
+            m_OnMainTextRequest?.Invoke(m_Text.text);
         }
 
         [ContextMenu("Hide notification")]
@@ -116,7 +147,9 @@ namespace Future
             }
 
             m_CanvasGroup.alpha = 0f;
-            m_OnSwipeAway?.Invoke(goingLeft ? 0 : 1);
+            m_CurrentSettings.ChoiceMade = goingLeft;
+            m_CurrentSettings.ProcessItem();
+            m_OnSwipeAway?.Invoke(goingLeft);
 
             yield return null;
 

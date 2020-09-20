@@ -28,5 +28,12 @@ namespace ScriptableObjectArchitecture
                 return value;
             }
         }
-    } 
+        public void AddToValue(int value)
+        {
+            Value += value;
+
+            if (IsClamped)
+                Value = ClampValue(Value);
+        }
+    }
 }

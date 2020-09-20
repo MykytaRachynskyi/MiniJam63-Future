@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9922f20fe48df8498807477e4c51033, type: 3}
+  m_Name: NotificationItem_0
+  m_EditorClassIdentifier: 
+  m_ID: 0
+  m_NotificationText: 'Alex: "Hey, you were totally wasted yesterday how the hell
+    are you gonna work today?"'
+  m_NotificationTextIfPrecedentLeft: 
+  m_NotificationTextIfPrecedentRight: 
+  m_RequiresChoice: 1
+  m_LeftOptionText: Attend
+  m_RightOptionText: Skip job
+  m_PrecedentItem: {fileID: 0}
+  m_ChoiceMade: 0
+  m_ChoiceMadeString: 

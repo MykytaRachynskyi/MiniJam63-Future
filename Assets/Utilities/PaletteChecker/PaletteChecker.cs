@@ -7,6 +7,8 @@ namespace Future.Utilities
 {
     public class PaletteChecker : MonoBehaviour
     {
+        enum ConverterColorSettings { RGB, HSV }
+
         [SerializeField] Texture2D m_Palette;
         [SerializeField] Color[] m_ColorsInPalette;
 
@@ -14,6 +16,16 @@ namespace Future.Utilities
         [SerializeField] Color[] m_ColorsInTexture;
 
         [SerializeField] Texture2D m_TextureToConvert;
+
+        [Header("Closest color algorithm settings")]
+        [Range(0f, 1f)]
+        [SerializeField] float m_HueWeight = .47f;
+        [Range(0f, 1f)]
+        [SerializeField] float m_SaturationWeight = .2875f;
+        [Range(0f, 1f)]
+        [SerializeField] float m_ValueWeight = .2375f;
+        [SerializeField]
+        ConverterColorSettings m_ConverterColorSettings;
 
         [ExecuteInEditMode]
         [ContextMenu("GetPalette")]
@@ -57,13 +69,25 @@ namespace Future.Utilities
             for (int i = 0; i < oldColors.Length; i++)
             {
                 if (!paletteSet.Contains(oldColors[i]))
-                    oldColors[i] = FindNearestColorInPalette(oldColors[i]);
+                {
+                    switch (m_ConverterColorSettings)
+                    {
+                        case ConverterColorSettings.RGB:
+                            oldColors[i] = FindNearestColorInPaletteRGB(oldColors[i]);
+                            break;
+                        case ConverterColorSettings.HSV:
+                            oldColors[i] = FindNearestColorInPaletteHSV(oldColors[i]);
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
 
             newTex.SetPixels(oldColors);
 #if UNITY_EDITOR
             byte[] bytes = newTex.EncodeToPNG();
-            FileStream stream = new FileStream(Application.dataPath + "newTex.png", FileMode.OpenOrCreate, FileAccess.Write);
+            FileStream stream = new FileStream(Application.dataPath + "newTex_" + m_ConverterColorSettings.ToString() + ".png", FileMode.OpenOrCreate, FileAccess.Write);
             BinaryWriter writer = new BinaryWriter(stream);
             for (int i = 0; i < bytes.Length; i++)
             {
@@ -76,20 +100,55 @@ namespace Future.Utilities
             UnityEditor.AssetDatabase.Refresh();
 #endif
         }
-
-        public Color FindNearestColorInPalette(Color src)
+        public Color FindNearestColorInPaletteRGB(Color src)
         {
+            if (src.a < .1f)
+                return new Color(1f, 1f, 1f, 0f);
             float minimumDistance = 255f * 255f + 255f * 255f + 255f * 255f + 1f;
 
             int closestColorID = 0;
 
             for (int i = 0; i < m_ColorsInPalette.Length; i++)
             {
-                float distR = Mathf.Abs(m_ColorsInPalette[i].r - src.r);
-                float distG = Mathf.Abs(m_ColorsInPalette[i].g - src.g);
-                float distB = Mathf.Abs(m_ColorsInPalette[i].b - src.b);
+                float distH = Mathf.Abs(m_ColorsInPalette[i].r - src.r);
+                float distS = Mathf.Abs(m_ColorsInPalette[i].g - src.g);
+                float distV = Mathf.Abs(m_ColorsInPalette[i].b - src.b);
 
-                float distance = distR * distR + distG * distG + distB * distB;
+                float distance = (distH * distH) + (distS * distS) + (distV * distV);
+
+                if (distance < minimumDistance)
+                    closestColorID = i;
+            }
+
+            return m_ColorsInPalette[closestColorID];
+        }
+
+        public Color FindNearestColorInPaletteHSV(Color src)
+        {
+            if (src.a < .1f)
+                return new Color(1f, 1f, 1f, 0f);
+            float minimumDistance = 255f * 255f + 255f * 255f + 255f * 255f + 1f;
+
+            float H = 0f;
+            float S = 0f;
+            float V = 0f;
+            Color.RGBToHSV(src, out H, out S, out V);
+
+            int closestColorID = 0;
+
+            for (int i = 0; i < m_ColorsInPalette.Length; i++)
+            {
+                float paletteH = 0f;
+                float paletteS = 0f;
+                float paletteV = 0f;
+
+                Color.RGBToHSV(m_ColorsInPalette[i], out paletteH, out paletteS, out paletteV);
+
+                float distH = Mathf.Abs(paletteH - H);
+                float distS = Mathf.Abs(paletteS - S);
+                float distV = Mathf.Abs(paletteV - V);
+
+                float distance = (distH * distH) * m_HueWeight + (distS * distS) * m_SaturationWeight + (distV * distV) * m_ValueWeight;
 
                 if (distance < minimumDistance)
                     closestColorID = i;
