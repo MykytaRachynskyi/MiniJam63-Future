@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9922f20fe48df8498807477e4c51033, type: 3}
+  m_Name: NotificationItem_5
+  m_EditorClassIdentifier: 
+  m_ID: 5
+  m_NotificationText: 
+  m_NotificationTextIfPrecedentLeft: 'HR: Congratulations you''ve been promoted due
+    to your amazing skill and problem solving'
+  m_NotificationTextIfPrecedentRight: 'HR: Congratulations you''ve been promoted
+    because your superviser fucked up and was fired. Good luc HR: Congratulations
+    you''ve been promoted because your superviser fuked up and was fired. Good luck
+    on your new position :)'
+  m_RequiresChoice: 0
+  m_LeftOptionText: 
+  m_RightOptionText: 
+  m_PrecedentItem: {fileID: 11400000, guid: f47863af6ea53b948a422c2cd134dcc0, type: 2}
+  m_ChoiceMade: 0
+  m_ChoiceMadeString: 
+  m_OnNotificationProcessed:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnNotificationProcessedIfPrecedentLeft:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 7ccfb31ef39ac5040bd2eca280a0bc7f, type: 2}
+        m_MethodName: AddToValue
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 100
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_OnNotificationProcessedIfPrecedentRight:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 7ccfb31ef39ac5040bd2eca280a0bc7f, type: 2}
+        m_MethodName: AddToValue
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 100
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_OnChosenLeft:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnChosenRight:
+    m_PersistentCalls:
+      m_Calls: []

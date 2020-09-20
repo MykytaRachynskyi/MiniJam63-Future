@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9922f20fe48df8498807477e4c51033, type: 3}
+  m_Name: NotificationItem_15
+  m_EditorClassIdentifier: 
+  m_ID: 15
+  m_NotificationText: 
+  m_NotificationTextIfPrecedentLeft: 'Manager: "Look, I get it, you had a fun time
+    last night, came to work hung over, but I can''t gloss over so many mistakes.
+    Sorry, I''m going to have to deduct a fee from your earnings."'
+  m_NotificationTextIfPrecedentRight: 'Manager: "Hey, you said that you were sick,
+    but didn''t submit the doctor''s papers. Sorry, but I''m going to have to deduct
+    a penalty from your earnings."'
+  m_RequiresChoice: 0
+  m_LeftOptionText: 
+  m_RightOptionText: 
+  m_PrecedentItem: {fileID: 11400000, guid: 44549f2826cb0394db949b0174adf459, type: 2}
+  m_ChoiceMade: 0
+  m_ChoiceMadeString: 
+  m_OnNotificationProcessed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 7ccfb31ef39ac5040bd2eca280a0bc7f, type: 2}
+        m_MethodName: AddToValue
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: -200
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_OnNotificationProcessedIfPrecedentLeft:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnNotificationProcessedIfPrecedentRight:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnChosenLeft:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnChosenRight:
+    m_PersistentCalls:
+      m_Calls: []
