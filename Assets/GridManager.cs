@@ -18,12 +18,14 @@ namespace Future
 
         [SerializeField] int m_RequiredNeighboursToDestroy = 3;
 
+        [SerializeField] int m_FallDistance = 20;
+
         private Tile[,] m_Grid;
 
-        private void Start()
+       /* private void Start()
         {
             InitGrid();
-        }
+        }*/
 
         public void ReinitGrid()
         {
@@ -33,11 +35,18 @@ namespace Future
 
         void DestroyGrid()
         {
-            for (int i = 0; i < m_Grid.GetLength(0); i++)
+            if (m_Grid == null || m_Grid.Length == 0)
             {
-                for (int j = 0; j < m_Grid.GetLength(1); j++)
+                return;
+            }
+            else
+            {
+                for (int i = 0; i < m_Grid.GetLength(0); i++)
                 {
-                    Destroy(m_Grid[i, j].gameObject);
+                    for (int j = 0; j < m_Grid.GetLength(1); j++)
+                    {
+                        Destroy(m_Grid[i, j].gameObject);
+                    }
                 }
             }
         }
@@ -52,14 +61,15 @@ namespace Future
                 for (int column = 0; column < m_GridSizeY; column++)
                 {
                     Tile newTile = Instantiate(m_TilePrefab);
+                    
 
                     int index = Random.Range(0, m_Sprites.Count);
                     newTile.transform.parent = transform;
-                    newTile.transform.position = new Vector3(row * m_Distance, column * m_Distance, 0) + positionOffset;
+                    newTile.transform.position = new Vector3(row * m_Distance, column * m_Distance + m_FallDistance, 0) + positionOffset;
+                    newTile.InitPlayMoveDownAnimation(m_GridSizeY, m_Distance, InitOnTileFinishedFalling);
                     newTile.transform.localScale = Vector3.one * m_ScaleMultiplier;
 
                     newTile.Init(m_Sprites[index], index, row, column, DestroyAllNeighbours);
-
                     m_Grid[row, column] = newTile;
                 }
             }
@@ -70,6 +80,7 @@ namespace Future
 
         Dictionary<int, int> m_EmptySpacesPerColumn = new Dictionary<int, int>();
         HashSet<Tile> m_TilesBeingAnimated = new HashSet<Tile>();
+        HashSet<Tile> m_InitTilesBeingAnimated = new HashSet<Tile>();
 
         void DestroyAllNeighbours(int coordX, int coordY, int id)
         {
@@ -245,6 +256,21 @@ namespace Future
             }
         }
 
+        void InitOnTileFinishedFalling(Tile tile)
+        {
+            if (m_InitTilesBeingAnimated.Contains(tile))
+            {
+                m_InitTilesBeingAnimated.Remove(tile);
+            }
+
+            Debug.Log(m_InitTilesBeingAnimated.Count);
+
+            if (m_InitTilesBeingAnimated.Count == 0)
+            {
+                SetAllTilesInteractable(true);
+            }
+        }
+
         void RepopulateGrid()
         {
             foreach (var item in m_EmptySpacesPerColumn)
@@ -254,12 +280,14 @@ namespace Future
                 {
                     int index = Random.Range(0, m_Sprites.Count);
                     int row = m_Grid.GetLength(1) - j;
+                    m_Grid[item.Key, row].transform.position += new Vector3(0, m_FallDistance + 2, 0);
                     m_Grid[item.Key, row].Init(m_Sprites[index], index, item.Key, row, DestroyAllNeighbours);
+                    m_InitTilesBeingAnimated.Add(m_Grid[item.Key, row]);
+                    m_Grid[item.Key, row].InitPlayMoveDownAnimation(m_Grid.GetLength(1), m_Distance, InitOnTileFinishedFalling);
                     j++;
                 }
             }
-
-            SetAllTilesInteractable(true);
+            
         }
 
         void SetAllTilesInteractable(bool interactable)
