@@ -60,6 +60,10 @@ namespace Future
 
             if (settings.RequiresChoice)
             {
+
+                m_LeftText.gameObject.SetActive(true);
+                m_RightText.gameObject.SetActive(true);
+
                 m_LeftText.text = settings.LeftOptionText;
                 m_RightText.text = settings.RightOptionText;
             }

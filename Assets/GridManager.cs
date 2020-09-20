@@ -290,7 +290,7 @@ namespace Future
             
         }
 
-        void SetAllTilesInteractable(bool interactable)
+        public void SetAllTilesInteractable(bool interactable)
         {
             for (int i = 0; i < m_Grid.GetLength(0); i++)
             {

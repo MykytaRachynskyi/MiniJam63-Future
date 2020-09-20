@@ -17,11 +17,6 @@ namespace Future
 
         Coroutine m_DelayedShowNotification;
 
-        private void Start()
-        {
-            StartSequence();
-        }
-
         public void StartSequence()
         {
             m_CurrentSequenceID = 0;
