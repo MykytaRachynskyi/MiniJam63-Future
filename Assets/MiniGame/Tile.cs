@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Future
 {
@@ -8,6 +9,7 @@ namespace Future
     {
         [SerializeField] SpriteRenderer m_SpriteRenderer;
         [SerializeField] float m_FallTimeInSeconds;
+        [SerializeField] UnityEvent onTappedSound;
 
         public delegate void OnTappedCallback(int coordX, int coordY, int id);
         OnTappedCallback m_OnTappedCallback;
@@ -144,6 +146,7 @@ namespace Future
             if (!m_Interactable)
                 return;
 
+            onTappedSound.Invoke();
             m_OnTappedCallback?.Invoke(m_CoordX, m_CoordY, m_ID);
         }
 
