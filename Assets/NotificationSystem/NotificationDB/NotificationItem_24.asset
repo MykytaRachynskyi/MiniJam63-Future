@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: NotificationItem_24
   m_EditorClassIdentifier: 
   m_ID: 24
-  m_NotificationText: LALAL NOTIFICATION 9
+  m_NotificationText: "\"Mom: I've taken the virus test. It's positive. Call me.
+    Alex: Dude, I got this damn virus!\"\t \t"
   m_NotificationTextIfPrecedentLeft: 
   m_NotificationTextIfPrecedentRight: 
   m_RequiresChoice: 0

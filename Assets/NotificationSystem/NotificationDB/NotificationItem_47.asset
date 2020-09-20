@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9922f20fe48df8498807477e4c51033, type: 3}
   m_Name: NotificationItem_47
   m_EditorClassIdentifier: 
-  m_ID: 9
-  m_NotificationText: LALAL NOTIFICATION 9
+  m_ID: 47
+  m_NotificationText: 'UNKNOWN: "hi there cutie :^) I''d love to buy some pictures
+    of those beautiful feet. Please let me know if you''re ready."'
   m_NotificationTextIfPrecedentLeft: 
   m_NotificationTextIfPrecedentRight: 
-  m_RequiresChoice: 0
-  m_LeftOptionText: 
-  m_RightOptionText: 
+  m_RequiresChoice: 1
+  m_LeftOptionText: Send feet pics
+  m_RightOptionText: ignore
   m_PrecedentItem: {fileID: 0}
   m_ChoiceMade: 0
   m_ChoiceMadeString: 
@@ -33,7 +34,18 @@ MonoBehaviour:
       m_Calls: []
   m_OnChosenLeft:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 7ccfb31ef39ac5040bd2eca280a0bc7f, type: 2}
+        m_MethodName: AddToValue
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 250
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnChosenRight:
     m_PersistentCalls:
       m_Calls: []

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9922f20fe48df8498807477e4c51033, type: 3}
   m_Name: NotificationItem_59
   m_EditorClassIdentifier: 
-  m_ID: 9
-  m_NotificationText: LALAL NOTIFICATION 9
+  m_ID: 59
+  m_NotificationText: 'Alex: "where r u? we''re getting to the fifth round of shots..
+    if u don''t come soon ... come soon"'
   m_NotificationTextIfPrecedentLeft: 
   m_NotificationTextIfPrecedentRight: 
   m_RequiresChoice: 0

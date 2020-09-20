@@ -12,14 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9922f20fe48df8498807477e4c51033, type: 3}
   m_Name: NotificationItem_33
   m_EditorClassIdentifier: 
-  m_ID: 9
-  m_NotificationText: LALAL NOTIFICATION 9
-  m_NotificationTextIfPrecedentLeft: 
-  m_NotificationTextIfPrecedentRight: 
-  m_RequiresChoice: 0
-  m_LeftOptionText: 
-  m_RightOptionText: 
-  m_PrecedentItem: {fileID: 0}
+  m_ID: 33
+  m_NotificationText: 
+  m_NotificationTextIfPrecedentLeft: 'Alex: "Hey! really need some cash rn can u
+    help out?? gonna give it back by the end of the week no worries."'
+  m_NotificationTextIfPrecedentRight: 'Alex: "YO, I STILL didn''t get the cash u
+    owe me, what''s up with that? are u ignoring me?? look, call me back asap or
+    else.."'
+  m_RequiresChoice: 1
+  m_LeftOptionText: Lend money
+  m_RightOptionText: Ignore
+  m_PrecedentItem: {fileID: 11400000, guid: 501a0c53d1e692e42b103f5fe702584e, type: 2}
   m_ChoiceMade: 0
   m_ChoiceMadeString: 
   m_OnNotificationProcessed:

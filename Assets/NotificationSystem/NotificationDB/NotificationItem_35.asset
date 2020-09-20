@@ -12,8 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9922f20fe48df8498807477e4c51033, type: 3}
   m_Name: NotificationItem_35
   m_EditorClassIdentifier: 
-  m_ID: 9
-  m_NotificationText: LALAL NOTIFICATION 9
+  m_ID: 35
+  m_NotificationText: 'Manager Joe: HEY, WHAT THE HELL? WHY DIDN''T YOU SAY YOU HAVE
+    THE VIRUS?! Now everyone at the restourant will have to get tested.. and what
+    if they all have it? Who''s going to show up to work next week? Who''s going
+    to keep this place afloat? You? You know what don''t come back here, got it?
+    I don''t want to see your lying diseased face around my joint! Hope you die in
+    a ditch!'
   m_NotificationTextIfPrecedentLeft: 
   m_NotificationTextIfPrecedentRight: 
   m_RequiresChoice: 0

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: NotificationItem_31
   m_EditorClassIdentifier: 
   m_ID: 31
-  m_NotificationText: LALAL NOTIFICATION 9
+  m_NotificationText: 'Sam: Hey... the test came back positive. Call me when you
+    see this.'
   m_NotificationTextIfPrecedentLeft: 
   m_NotificationTextIfPrecedentRight: 
   m_RequiresChoice: 0
