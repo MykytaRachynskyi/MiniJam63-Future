@@ -22,10 +22,10 @@ namespace Future
 
         private Tile[,] m_Grid;
 
-        private void Start()
+       /* private void Start()
         {
             InitGrid();
-        }
+        }*/
 
         public void ReinitGrid()
         {
@@ -35,11 +35,18 @@ namespace Future
 
         void DestroyGrid()
         {
-            for (int i = 0; i < m_Grid.GetLength(0); i++)
+            if (m_Grid == null || m_Grid.Length == 0)
             {
-                for (int j = 0; j < m_Grid.GetLength(1); j++)
+                return;
+            }
+            else
+            {
+                for (int i = 0; i < m_Grid.GetLength(0); i++)
                 {
-                    Destroy(m_Grid[i, j].gameObject);
+                    for (int j = 0; j < m_Grid.GetLength(1); j++)
+                    {
+                        Destroy(m_Grid[i, j].gameObject);
+                    }
                 }
             }
         }
@@ -59,7 +66,7 @@ namespace Future
                     int index = Random.Range(0, m_Sprites.Count);
                     newTile.transform.parent = transform;
                     newTile.transform.position = new Vector3(row * m_Distance, column * m_Distance + m_FallDistance, 0) + positionOffset;
-                    newTile.InitPlayMoveDownAnimation(m_GridSizeY, m_Distance, OnTileFinishedFalling);
+                    newTile.InitPlayMoveDownAnimation(m_GridSizeY, m_Distance, InitOnTileFinishedFalling);
                     newTile.transform.localScale = Vector3.one * m_ScaleMultiplier;
 
                     newTile.Init(m_Sprites[index], index, row, column, DestroyAllNeighbours);

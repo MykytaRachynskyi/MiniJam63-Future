@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
 
 namespace Future
@@ -125,7 +124,6 @@ namespace Future
             yield return null;
 
             m_InitialPosition = this.transform.position;
-            SetInteractable(true);
 
             callback?.Invoke(this);
         }
