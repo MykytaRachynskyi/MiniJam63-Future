@@ -22,10 +22,32 @@ MonoBehaviour:
   m_RightOptionText: Ignore
   m_PrecedentItem: {fileID: 0}
   m_ChoiceMade: 0
-  m_ChoiceMadeString: 
+  m_ChoiceMadeString: Ignore
   m_OnNotificationProcessed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: dfc661f3de0ed1f4e8ffad4b224f915b, type: 2}
+        m_MethodName: Raise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: aaadd5e8a5d42bc49b89bec30dd29afd, type: 2}
+        m_MethodName: Raise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnNotificationProcessedIfPrecedentLeft:
     m_PersistentCalls:
       m_Calls: []

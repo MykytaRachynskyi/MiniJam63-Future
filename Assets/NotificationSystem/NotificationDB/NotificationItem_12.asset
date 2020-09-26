@@ -18,11 +18,11 @@ MonoBehaviour:
   m_NotificationTextIfPrecedentLeft: 
   m_NotificationTextIfPrecedentRight: 
   m_RequiresChoice: 1
-  m_LeftOptionText: Wow, that's what I need!
-  m_RightOptionText: Not feeling like partying, better stay home.
+  m_LeftOptionText: That's what I need!
+  m_RightOptionText: Not feeling it
   m_PrecedentItem: {fileID: 0}
-  m_ChoiceMade: 0
-  m_ChoiceMadeString: 
+  m_ChoiceMade: 1
+  m_ChoiceMadeString: Wow, that's what I need!
   m_OnNotificationProcessed:
     m_PersistentCalls:
       m_Calls: []

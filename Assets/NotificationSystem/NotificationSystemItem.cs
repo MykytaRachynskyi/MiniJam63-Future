@@ -71,6 +71,11 @@ namespace Future
             {
                 m_OnNotificationProcessed?.Invoke();
             }
+
+            if (m_ChoiceMade)
+                m_OnChosenLeft?.Invoke();
+            else
+                m_OnChosenRight?.Invoke();
         }
     }
 }

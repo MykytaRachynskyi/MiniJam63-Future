@@ -19,7 +19,7 @@ MonoBehaviour:
   m_NotificationTextIfPrecedentRight: 
   m_RequiresChoice: 1
   m_LeftOptionText: Ignore
-  m_RightOptionText: Try it, what can go wrong?
+  m_RightOptionText: Try it, why not?
   m_PrecedentItem: {fileID: 0}
   m_ChoiceMade: 0
   m_ChoiceMadeString: 

@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ID: 33
   m_NotificationText: 
-  m_NotificationTextIfPrecedentLeft: 'Alex: "Hey! really need some cash rn can u
+  m_NotificationTextIfPrecedentLeft: 'Alex: "YO, I STILL didn''t get the cash u owe
+    me, what''s up with that? are u ignoring me?? look, call me back asap or else.."'
+  m_NotificationTextIfPrecedentRight: 'Alex: "Hey! really need some cash rn can u
     help out?? gonna give it back by the end of the week no worries."'
-  m_NotificationTextIfPrecedentRight: 'Alex: "YO, I STILL didn''t get the cash u
-    owe me, what''s up with that? are u ignoring me?? look, call me back asap or
-    else.."'
   m_RequiresChoice: 1
   m_LeftOptionText: Lend money
   m_RightOptionText: Ignore

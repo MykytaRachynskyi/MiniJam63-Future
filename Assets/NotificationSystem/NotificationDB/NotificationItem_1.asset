@@ -16,7 +16,8 @@ MonoBehaviour:
   m_NotificationText: 
   m_NotificationTextIfPrecedentLeft: 'Manager: Thank you for being there for us today.
     Take this a thank you!  '
-  m_NotificationTextIfPrecedentRight: 'Manager: '
+  m_NotificationTextIfPrecedentRight: 'Manager: Is everything okay? You didn''t show
+    up today. Contact me when you can.'
   m_RequiresChoice: 0
   m_LeftOptionText: 
   m_RightOptionText: 

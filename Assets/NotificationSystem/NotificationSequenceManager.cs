@@ -40,6 +40,9 @@ namespace Future
             if (m_DelayedShowNotification != null)
                 StopCoroutine(m_DelayedShowNotification);
 
+            if (m_CurrentSequenceID >= m_ItemSequence.Length)
+                return;
+
             m_Notification.SetNotification(m_ItemSequence[m_CurrentSequenceID]);
             m_DelayedShowNotification = StartCoroutine(DelayedShowNotification());
         }

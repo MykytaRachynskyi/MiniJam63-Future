@@ -28,11 +28,15 @@ namespace Future
         [SerializeField] float m_SwipeAwayMargin;
         [SerializeField] float m_SwipeAwayTimeInSeconds;
 
+        [SerializeField] int m_MaxNotificationLength;
+
         [SerializeField] BoolUnityEvent m_OnSwipeAway;
         [SerializeField] StringUnityEvent m_OnMainTextRequest;
 
         delegate void MoveCallback();
         public delegate void OnHiddenCallback();
+
+        const string c_Ellipsis = "...";
 
         bool m_IsSwipeable = false;
 
@@ -45,17 +49,24 @@ namespace Future
 
         NotificationSystemItem m_CurrentSettings;
 
+        string m_CurrentMessage;
+
         public void SetNotification(NotificationSystemItem settings)
         {
             m_CurrentSettings = settings;
 
             if (settings.PrecedentItem != null)
             {
-                m_Text.text = settings.PrecedentItem.ChoiceMade ? settings.NotificationTextIfPrecedentLeft : settings.NotificationTextIfPrecedentRight;
+                m_CurrentMessage = m_Text.text = settings.PrecedentItem.ChoiceMade ? settings.NotificationTextIfPrecedentLeft : settings.NotificationTextIfPrecedentRight;
             }
             else
             {
-                m_Text.text = settings.NotificationText;
+                m_CurrentMessage = m_Text.text = settings.NotificationText;
+            }
+
+            if (m_Text.text.Length > m_MaxNotificationLength)
+            {
+                m_Text.text = m_Text.text.Substring(0, m_MaxNotificationLength - c_Ellipsis.Length) + c_Ellipsis;
             }
 
             if (settings.RequiresChoice)
@@ -87,7 +98,7 @@ namespace Future
 
         public void RequestMainText()
         {
-            m_OnMainTextRequest?.Invoke(m_Text.text);
+            m_OnMainTextRequest?.Invoke(m_CurrentMessage);
         }
 
         [ContextMenu("Hide notification")]

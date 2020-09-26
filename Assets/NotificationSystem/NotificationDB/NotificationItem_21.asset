@@ -18,8 +18,8 @@ MonoBehaviour:
   m_NotificationTextIfPrecedentLeft: 
   m_NotificationTextIfPrecedentRight: 
   m_RequiresChoice: 1
-  m_LeftOptionText: Meet mom.
-  m_RightOptionText: Ignore it and go hang out with Alex.
+  m_LeftOptionText: Meet mom
+  m_RightOptionText: Go out with Alex instead
   m_PrecedentItem: {fileID: 0}
   m_ChoiceMade: 0
   m_ChoiceMadeString: 

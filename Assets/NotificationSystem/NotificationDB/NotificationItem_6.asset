@@ -17,11 +17,11 @@ MonoBehaviour:
   m_NotificationTextIfPrecedentLeft: 
   m_NotificationTextIfPrecedentRight: 
   m_RequiresChoice: 1
-  m_LeftOptionText: HELL YEA!! Party all night!
-  m_RightOptionText: Naah, better stay home and work all night
+  m_LeftOptionText: HELL YEA!!
+  m_RightOptionText: Nah, stay in
   m_PrecedentItem: {fileID: 0}
   m_ChoiceMade: 0
-  m_ChoiceMadeString: 
+  m_ChoiceMadeString: Naah, better stay home and work all night
   m_OnNotificationProcessed:
     m_PersistentCalls:
       m_Calls: []

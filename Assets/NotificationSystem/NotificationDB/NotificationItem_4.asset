@@ -18,10 +18,10 @@ MonoBehaviour:
   m_NotificationTextIfPrecedentRight: 
   m_RequiresChoice: 1
   m_LeftOptionText: Buy new phone
-  m_RightOptionText: Kepp the old phone
+  m_RightOptionText: Keep the old phone
   m_PrecedentItem: {fileID: 0}
-  m_ChoiceMade: 0
-  m_ChoiceMadeString: 
+  m_ChoiceMade: 1
+  m_ChoiceMadeString: Buy new phone
   m_OnNotificationProcessed:
     m_PersistentCalls:
       m_Calls: []

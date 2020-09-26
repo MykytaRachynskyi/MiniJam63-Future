@@ -22,7 +22,7 @@ namespace Future
 
         private Tile[,] m_Grid;
 
-        /*private void Start()
+       /* private void Start()
         {
             InitGrid();
         }*/
